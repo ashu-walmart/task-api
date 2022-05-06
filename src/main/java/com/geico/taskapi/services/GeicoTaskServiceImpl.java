@@ -1,8 +1,8 @@
 package com.geico.taskapi.services;
 
 import com.geico.taskapi.configuration.GeicoTaskProps;
-import com.geico.taskapi.domain.exception.BadTaskInputException;
 import com.geico.taskapi.domain.GeicoTask;
+import com.geico.taskapi.domain.exception.BadTaskInputException;
 import com.geico.taskapi.domain.exception.TooManyOpenHighTasksException;
 import com.geico.taskapi.repositories.GeicoTaskRepository;
 import lombok.RequiredArgsConstructor;
@@ -73,7 +73,8 @@ public class GeicoTaskServiceImpl implements GeicoTaskService {
     }
 
     private void validateMaxDueOnADate(LocalDate dueDate) {
-        if(repository.getTaskCountForDueDate(dueDate) > props.getMaxOpenHighTasksForADueDate()) {
+        int count = repository.getTaskCountForDueDate(dueDate);
+        if(props.getMaxOpenHighTasksForADueDate() <= count) {
             throw new TooManyOpenHighTasksException("Too many high priority open tasks " +
                     "for the same due date: " + dueDate);
         }
