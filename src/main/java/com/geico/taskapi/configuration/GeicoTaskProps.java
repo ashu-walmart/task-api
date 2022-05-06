@@ -1,9 +1,9 @@
 package com.geico.taskapi.configuration;
 
-import lombok.Getter;
+import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-@Getter
+@Data
 @ConfigurationProperties(prefix = "geico.task")
 public class GeicoTaskProps {
     int maxOpenHighTasksForADueDate = 100;

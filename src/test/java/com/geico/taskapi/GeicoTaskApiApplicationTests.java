@@ -28,8 +28,6 @@ class GeicoTaskApiApplicationTests {
 
 	@Autowired
 	private TestRestTemplate restTemplate;
-	@SpyBean
-	private GeicoTaskProps props;
 	private HttpHeaders headers;
 
 	@BeforeEach
@@ -92,7 +90,6 @@ class GeicoTaskApiApplicationTests {
 	@Order(5)
 	void canNotCreateTooManyTasks() {
 
-		when(props.getMaxOpenHighTasksForADueDate()).thenReturn(Integer.valueOf(3));
 		createGeicoTask("/createTaskPayload.json", String.class);
 		createGeicoTask("/createTaskPayload.json", String.class);
 		ResponseEntity<String> createdGeicoTask =
