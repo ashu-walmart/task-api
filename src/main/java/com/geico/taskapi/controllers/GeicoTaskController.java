@@ -1,7 +1,6 @@
 package com.geico.taskapi.controllers;
 
 import com.geico.taskapi.domain.GeicoTask;
-import com.geico.taskapi.domain.exception.GeicoTaskNotFoundException;
 import com.geico.taskapi.services.GeicoTaskService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -26,8 +25,7 @@ public class GeicoTaskController {
 
 	@GetMapping("/tasks/{id}")
 	GeicoTask one(@PathVariable Long id) {
-		return service.findTask(id)
-				.orElseThrow(() -> new GeicoTaskNotFoundException(id));
+		return service.findTask(id);
 	}
 
 	@PutMapping("/tasks/{id}")

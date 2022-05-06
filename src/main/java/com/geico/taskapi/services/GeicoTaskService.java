@@ -10,7 +10,7 @@ public interface GeicoTaskService {
 
     GeicoTask createTask(GeicoTask task);
 
-    Optional<GeicoTask> findTask(Long id);
+    GeicoTask findTask(Long id);
 
     GeicoTask upsertTask(GeicoTask newTask, Long id);
 

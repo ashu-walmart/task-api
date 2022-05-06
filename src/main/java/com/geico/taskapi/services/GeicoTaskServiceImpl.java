@@ -3,6 +3,7 @@ package com.geico.taskapi.services;
 import com.geico.taskapi.configuration.GeicoTaskProps;
 import com.geico.taskapi.domain.GeicoTask;
 import com.geico.taskapi.domain.exception.BadTaskInputException;
+import com.geico.taskapi.domain.exception.GeicoTaskNotFoundException;
 import com.geico.taskapi.domain.exception.TooManyOpenHighTasksException;
 import com.geico.taskapi.repositories.GeicoTaskRepository;
 import lombok.RequiredArgsConstructor;
@@ -33,14 +34,14 @@ public class GeicoTaskServiceImpl implements GeicoTaskService {
     }
 
     @Override
-    public Optional<GeicoTask> findTask(Long id) {
-        return repository.findById(id);
+    public GeicoTask findTask(Long id) {
+        return repository.findById(id).orElseThrow(() -> new GeicoTaskNotFoundException(id));
     }
 
     @Override
     @Transactional
     public GeicoTask upsertTask(GeicoTask newTask, Long id) {
-        validateMaxDueOnADate(newTask.getDueLocalDate());
+        validateDueDateInFuture(newTask.getDueLocalDate());
         validateMaxDueOnADate(newTask.getDueLocalDate());
 
         return repository.findById(id)
