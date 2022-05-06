@@ -117,11 +117,11 @@ class GeicoTaskServiceImplTest {
 
         //setup
         when(props.getMaxOpenHighTasksForADueDate()).thenReturn(100);
-        when(repository.getTaskCountForDueDate(LocalDate.now())).thenReturn(3);
         GeicoTask found = GeicoTask.builder().id(2001l).dueLocalDate(LocalDate.now()).build();
         when(repository.findById(2001l)).thenReturn(Optional.of(found));
         GeicoTask expected = GeicoTask.builder().id(2001l)
                 .dueLocalDate(LocalDate.now().plusDays(2)).build();
+        when(repository.getTaskCountForDueDate(expected.getDueLocalDate())).thenReturn(3);
         when(repository.save(expected)).thenReturn(expected);
 
         //execute
